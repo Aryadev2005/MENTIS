@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import sys; sys.path.insert\\(0, '/Users/aryadevchatterjee/Documents/MENTIS'\\); from api.database.migrations import env\")"
+    ]
+  }
+}

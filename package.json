@@ -1,0 +1,162 @@
+{
+  "name": "mentis",
+  "version": "1.0.0",
+  "description": "MENTIS — Your Unfair Advantage. India's most advanced real-time AI career intelligence platform.",
+  "main": "dist/electron/main.js",
+  "homepage": "./",
+  "author": {
+    "name": "MENTIS",
+    "email": "aryadevchatterjee2005@gmail.com"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:electron\" \"npm run dev:renderer\"",
+    "dev:renderer": "vite --config vite.renderer.config.ts",
+    "dev:electron": "tsc --project tsconfig.electron.json && electron .",
+    "dev:overlay": "vite --config vite.overlay.config.ts --port 5174",
+    "build": "npm run build:renderer && npm run build:electron",
+    "build:renderer": "vite build --config vite.renderer.config.ts",
+    "build:electron": "tsc --project tsconfig.electron.json",
+    "build:overlay": "vite build --config vite.overlay.config.ts",
+    "package": "npm run build && electron-builder",
+    "package:mac": "npm run build && electron-builder --mac",
+    "package:win": "npm run build && electron-builder --win",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,json,css}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@clerk/clerk-js": "^5.55.0",
+    "@radix-ui/react-alert-dialog": "^1.1.6",
+    "@radix-ui/react-avatar": "^1.1.3",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-dropdown-menu": "^2.1.6",
+    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-progress": "^1.1.2",
+    "@radix-ui/react-select": "^2.1.6",
+    "@radix-ui/react-separator": "^1.1.2",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@radix-ui/react-tabs": "^1.1.3",
+    "@radix-ui/react-toast": "^1.2.6",
+    "@radix-ui/react-tooltip": "^1.2.0",
+    "@tailwindcss/vite": "^4.3.0",
+    "axios": "^1.9.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.10.0",
+    "lucide-react": "^0.511.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2",
+    "react-router-dom": "^7.6.0",
+    "recharts": "^2.15.3",
+    "tailwind-merge": "^3.3.0",
+    "ws": "^8.18.2",
+    "zustand": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.4",
+    "@types/ws": "^8.5.14",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "@vitejs/plugin-react": "^4.4.1",
+    "@vitest/coverage-v8": "^3.1.4",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
+    "electron": "^33.4.1",
+    "electron-builder": "^25.1.8",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "postcss": "^8.5.3",
+    "prettier": "^3.5.3",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-electron": "^0.29.0",
+    "vitest": "^3.1.4"
+  },
+  "build": {
+    "appId": "com.mentis.app",
+    "productName": "MENTIS",
+    "copyright": "Copyright © 2025 MENTIS",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "api",
+        "to": "api",
+        "filter": [
+          "**/*",
+          "!**/__pycache__/**",
+          "!**/*.pyc",
+          "!**/node_modules/**"
+        ]
+      },
+      {
+        "from": "scripts",
+        "to": "scripts",
+        "filter": [
+          "*.py",
+          "*.sh",
+          "*.sql"
+        ]
+      }
+    ],
+    "afterSign": "scripts/notarize.js",
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.productivity",
+      "icon": "assets/icon.icns",
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.inherit.plist",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "extendInfo": {
+        "NSScreenCaptureUsageDescription": "MENTIS captures your screen to solve OA questions with AI.",
+        "NSMicrophoneUsageDescription": "MENTIS listens to your interview to provide real-time answers.",
+        "NSCameraUsageDescription": "MENTIS does not use the camera."
+      }
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "assets/icon.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "assets/icon.png",
+      "category": "Office"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico"
+    }
+  }
+}

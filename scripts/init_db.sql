@@ -1,0 +1,13 @@
+-- MENTIS Database Initialization
+-- Runs on first PostgreSQL container start
+
+CREATE EXTENSION IF NOT EXISTS vector;
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Grant full permissions to app user
+GRANT ALL PRIVILEGES ON DATABASE mentis TO mentis_user;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO mentis_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO mentis_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO mentis_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO mentis_user;

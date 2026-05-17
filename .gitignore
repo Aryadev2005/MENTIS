@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# Build outputs
+dist/
+release/
+build/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data
+data/
+*.db
+*.sqlite
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+coverage/
+
+# Electron
+out/
+
+# TypeScript
+*.js.map
+*.d.ts.map
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes (local only)
+postgres_data/
+redis_data/
+qdrant_data/
+grafana_data/
+prometheus_data/
